@@ -3,11 +3,12 @@ const testArea = document.querySelector("#test-area");
 const originText = document.querySelector("#origin-text p").innerHTML;
 const resetButton = document.querySelector("#reset");
 const theTimer = document.querySelector(".timer");
+const incorrect_W = document.querySelector(".incorrect_cls"); 
 
 var timer = [0,0,0,0];
 var interval;
 var timerRunning = false;
-
+var incorrectWord=0;
 // Add leading zero to numbers 9 or below (purely for aesthetics):
 function leadingZero(time) {
     if (time <= 9) {
@@ -34,12 +35,15 @@ function spellCheck() {
 
     if (textEntered == originText) {
         clearInterval(interval);
+        let incorr_W = "Number of Incorrect words: "+incorrectWord;
+        incorrect_W.innerHTML = incorr_W;
         testWrapper.style.borderColor = "#429890";
     } else {
         if (textEntered == originTextMatch) {
             testWrapper.style.borderColor = "#65CCf3";
         } else {
             testWrapper.style.borderColor = "#E95D0F";
+            incorrectWord++;
         }
     }
 
@@ -52,7 +56,7 @@ function start() {
         timerRunning = true;
         interval = setInterval(runTimer, 10);
     }
-    console.log(textEnterdLength);
+    // console.log(textEnterdLength);
 }
 
 // Reset everything:
@@ -61,6 +65,9 @@ function reset() {
     interval = null;
     timer = [0,0,0,0];
     timerRunning = false;
+    incorrectWord=0;
+    let incorr_W = "Number of Incorrect words: "+incorrectWord;
+    incorrect_W.innerHTML = incorr_W;
 
     testArea.value = "";
     theTimer.innerHTML = "00:00:00";
